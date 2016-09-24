@@ -15,7 +15,7 @@ namespace EComm.DataAccess
         }
     }
 
-    internal class EFRepository : DbContext, IRepository
+    public class EFRepository : DbContext, IRepository
     {
         private string _connStr;
 
@@ -39,6 +39,11 @@ namespace EComm.DataAccess
         public IEnumerable<Product> GetAllProducts()
         {
             return Products;
+        }
+
+        void IRepository.SaveChanges()
+        {
+            this.SaveChanges();
         }
     }
 }

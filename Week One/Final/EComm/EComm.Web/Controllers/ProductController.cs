@@ -23,7 +23,9 @@ namespace EComm.Web.Controllers
         public IActionResult Detail(int id)
         {
             var model = _repository.GetAllProducts().SingleOrDefault(p => p.Id == id);
-  
+
+            if (model == null) return NotFound();
+
             return View(model);
         }
 

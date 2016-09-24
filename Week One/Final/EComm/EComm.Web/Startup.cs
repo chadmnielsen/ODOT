@@ -35,6 +35,8 @@ namespace EComm.Web
             // Add framework services.
             services.AddMvc();
 
+            EFRepository er = new EFRepository("");
+
             services.AddScoped<IRepository>(serviceProvider => EFRepositoryFactory.GetInstance(Configuration["DbConnStr"]));
 
             services.AddAuthorization(options => {
