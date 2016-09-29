@@ -1,0 +1,35 @@
+﻿@model EComm.Model.Product
+
+<h2>@Model.ProductName</h2>
+<h3>@String.Format("{0:C}", Model.UnitPrice)</h3>
+
+<form asp-controller="Product" asp-action="AddToCart" method="post">
+  @Html.Hidden("id", Model.Id) 
+  <input name="quantity" size="3" />
+  <input type="submit" value="Add to Cart" />
+</form>
+
+<div id="message"></div>
+
+@section scripts
+{
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('form').submit(function(event) {
+          var formData = {
+              'id':$('input[name=id]').val(),
+              'quantity':$('input[name=quantity]').val()
+          };
+          $.ajax({
+              type:'POST',
+              url:'@Url.Action("AddToCart", "Product")', 
+              data:formData
+          })
+            .done(function(response) {
+              $('#message').html(response);                
+            });
+          event.preventDefault();
+      });
+    });
+  </script>
+}
