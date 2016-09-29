@@ -7,6 +7,7 @@ using EComm.DataAccess;
 using EComm.Web.Models;
 using System.Text;
 using EComm.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EComm.Web.Controllers
 {
@@ -70,6 +71,17 @@ namespace EComm.Web.Controllers
             // TODO: Charge the customer's card and record the order
             HttpContext.Session.Clear();
             return View("ThankYou");
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        public IActionResult Edit(int id)
+        {
+            var product = _repository.GetAllProducts().SingleOrDefault(p => p.Id == id);
+            if (product == null) return NotFound();
+
+            var pvm = new ProductViewModel(product);
+
+            return View(pvm);
         }
     }
 }

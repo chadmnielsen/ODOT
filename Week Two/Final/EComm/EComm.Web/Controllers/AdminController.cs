@@ -6,15 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using EComm.Web.ViewModels;
 using System.Security.Claims;
+using EComm.DataAccess;
 
 namespace EComm.Web.Controllers
 {
     [Authorize(Policy = "AdminOnly")]
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
+        public AdminController(IRepository repository)
+            : base(repository) { }
+
         public IActionResult Index()
         {
-            return View();
+            var products = (from p in _repository.GetAllProducts()
+                            orderby p.UnitPrice descending
+                            select p).ToList();
+
+            return View(products);
         }
 
         [AllowAnonymous]
