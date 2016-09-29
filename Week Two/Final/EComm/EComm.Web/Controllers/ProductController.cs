@@ -8,6 +8,7 @@ using EComm.Web.Models;
 using System.Text;
 using EComm.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using EComm.Model;
 
 namespace EComm.Web.Controllers
 {
@@ -83,5 +84,26 @@ namespace EComm.Web.Controllers
 
             return View(pvm);
         }
+
+        [HttpPost]
+        [Authorize(Policy = "AdminOnly")]
+        public IActionResult Edit(ProductViewModel pvm)
+        {
+            if (!ModelState.IsValid) {
+                // TODO: Do server-side validation handling
+            }
+            var product = new Product
+            {
+                Id = pvm.Id,
+                ProductName = pvm.ProductName,
+                SupplierId = pvm.SupplierId,
+                UnitPrice = pvm.UnitPrice,
+                Package = pvm.Package,
+                IsDiscontinued = pvm.IsDiscontinued
+            };
+            // save the product!
+
+            return RedirectToAction("Index", "Admin");
+        }       
     }
 }
