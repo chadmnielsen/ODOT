@@ -32,13 +32,31 @@ namespace EComm.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().ToTable("Product");
+            modelBuilder.Entity<Supplier>().ToTable("Supplier");
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
 
         public IEnumerable<Product> GetAllProducts()
         {
             return Products;
+        }
+
+        public IEnumerable<Supplier> GetAllSuppliers()
+        {
+            return Suppliers;
+        }
+
+        public void SaveProduct(Product product)
+        {
+            this.Update(product);
+            this.SaveChanges();
+
+            //var prod = Products.SingleOrDefault(p => p.Id == product.Id);
+            //prod.ProductName = product.ProductName;
+            //prod.UnitPrice = product.UnitPrice;
+            //this.SaveChanges();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EComm.Model;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -31,6 +32,8 @@ namespace EComm.Web.ViewModels
         [Required]
         [Display(Name = "Supplier")]
         public int SupplierId { get; set; }
+
+        public IEnumerable<SelectListItem> Suppliers { get; set; }
 
         [Display(Name = "Unit Price")]
         public decimal? UnitPrice { get; set; }

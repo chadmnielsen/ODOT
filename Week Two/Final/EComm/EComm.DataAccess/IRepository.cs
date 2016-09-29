@@ -9,6 +9,8 @@ namespace EComm.DataAccess
     public interface IRepository
     {
         IEnumerable<Product> GetAllProducts();
+        void SaveProduct(Product product);
 
+        IEnumerable<Supplier> GetAllSuppliers();
     }
 }

@@ -15,5 +15,15 @@ namespace EComm.DataAccess
                 new Product { Id=2, ProductName="Product2", SupplierId=0, UnitPrice=2.00M, Package="Box", IsDiscontinued=false }
             };
         }
+
+        public IEnumerable<Supplier> GetAllSuppliers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveProduct(Product product)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

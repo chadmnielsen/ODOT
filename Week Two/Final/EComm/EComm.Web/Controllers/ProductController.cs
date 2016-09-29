@@ -9,6 +9,7 @@ using System.Text;
 using EComm.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using EComm.Model;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EComm.Web.Controllers
 {
@@ -81,6 +82,9 @@ namespace EComm.Web.Controllers
             if (product == null) return NotFound();
 
             var pvm = new ProductViewModel(product);
+            pvm.Suppliers = new List<SelectListItem>(
+                from s in _repository.GetAllSuppliers()
+                select new SelectListItem() { Value = s.Id.ToString(), Text = s.CompanyName });
 
             return View(pvm);
         }
@@ -101,7 +105,7 @@ namespace EComm.Web.Controllers
                 Package = pvm.Package,
                 IsDiscontinued = pvm.IsDiscontinued
             };
-            // save the product!
+            _repository.SaveProduct(product);
 
             return RedirectToAction("Index", "Admin");
         }       
